@@ -4,6 +4,18 @@ import axios from "axios";
 
 const apiEndpoint = `https://localhost:44315/api/Car`;
 
+const getToken = () => {
+  return localStorage.getItem("token");
+};
+
+axios.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const fetchCars = createAsyncThunk(
   "cars/fetchCars",
   async (_, thunkAPI) => {
