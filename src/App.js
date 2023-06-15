@@ -19,6 +19,20 @@ import GuestList from "./pages/guest/guestList";
 import GuestAdd from "./pages/guest/guestAdd";
 import GuestUpdate from "./pages/guest/guestUpdate";
 import GuestDetails from "./pages/guest/guestDetails";
+import Login from "./pages/auth/login";
+import Register from "./pages/auth/register";
+import RoomList from "./pages/room/roomList";
+import RoomAdd from "./pages/room/roomAdd";
+import RoomDetails from "./pages/room/roomDetails";
+import RoomUpdate from "./pages/room/roomUpdate";
+import BookDetails from "./pages/book/bookDetails";
+import BookUpdate from "./pages/book/bookUpdate";
+import BookList from "./pages/book/bookList";
+import BookAdd from "./pages/book/bookAdd";
+import UnitList from "./pages/unit/unitList";
+import UnitAdd from "./pages/unit/unitAdd";
+import UnitDetails from "./pages/unit/unitDetails";
+import UnitUpdate from "./pages/unit/unitUpdate";
 
 const App = () => {
   const routers = createBrowserRouter([
@@ -28,10 +42,24 @@ const App = () => {
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
+        { path: "/login", element: <Login /> },
+        { path: "/register", element: <Register /> },
+        { path: "/units", element: <UnitList /> },
+        { path: "/units/add", element: <UnitAdd /> },
+        { path: "/units/:id", element: <UnitDetails /> },
+        { path: "/units/:id/update", element: <UnitUpdate /> },
+        { path: "/books", element: <BookList /> },
+        { path: "/books/add", element: <BookAdd /> },
+        { path: "/books/:id", element: <BookDetails /> },
+        { path: "/books/:id/update", element: <BookUpdate /> },
+        { path: "/rooms", element: <RoomList /> },
+        { path: "/rooms/add", element: <RoomAdd /> },
+        { path: "/rooms/:id", element: <RoomDetails /> },
+        { path: "/rooms/:id/update", element: <RoomUpdate /> },
         { path: "/services", element: <ServiceList /> },
         { path: "/services/add", element: <ServiceAdd /> },
         { path: "/services/:id", element: <ServiceDetails /> },
-        { path: "/services/:id/edit", element: <ServiceEdit /> },
+        { path: "/services/:id/update", element: <ServiceEdit /> },
         { path: "/cars", element: <CarList /> },
         { path: "/cars/add", element: <CarAdd /> },
         { path: "/cars/:id", element: <CarDetails /> },
