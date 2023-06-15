@@ -7,7 +7,11 @@ const Navbar = () => {
     { label: "owners", path: "/owners" },
     { label: "guests", path: "/guests" },
     { label: "cars", path: "/cars" },
+    { label: "register", path: "/register" },
+    { label: "rooms", path: "/rooms" },
     { label: "services", path: "/services" },
+    { label: "books", path: "/books" },
+    { label: "units", path: "/units" },
   ];
 
   const renderLinks = links.map((link, index) => (
