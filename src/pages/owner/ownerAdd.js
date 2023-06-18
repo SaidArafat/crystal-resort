@@ -89,7 +89,7 @@ const OwnerAdd = () => {
           onChange={handleInputChange}
           error={errorsForm.phone}
         />
-        <ButtonPrimary label="add Owner " type="submit" />
+        <ButtonPrimary label="add Guest " type="submit" />
       </form>
     </div>
   );
