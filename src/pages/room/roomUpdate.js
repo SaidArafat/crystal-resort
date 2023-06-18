@@ -16,6 +16,7 @@ const RoomUpdate = () => {
     code: "",
     price: "",
     type: "",
+    imageform: "",
   });
 
   const [errorsForm, setErrorsForm] = useState({});
@@ -44,6 +45,12 @@ const RoomUpdate = () => {
     setRoom(updatedItem);
   };
 
+  const handleImageChange = (event) => {
+    const newRoom = { ...room };
+    newRoom[event.target.name] = event.target.files[0];
+    setRoom(newRoom);
+  };
+
   const validateFormSubmit = () => {
     const options = { abortEarly: false };
 
@@ -52,6 +59,7 @@ const RoomUpdate = () => {
       code: joi.string().min(2).required().label("Code"),
       price: joi.number().min(2).required().label("Price"),
       type: joi.string().min(3).required().label("Type"),
+      imageform: joi.any().required().label("Image"),
     });
 
     return schema.validate(room, options);
@@ -59,6 +67,11 @@ const RoomUpdate = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+
+    Object.keys(room).forEach((key) => {
+      formData.append(key, room[key]);
+    });
 
     const { error } = validateFormSubmit();
     if (error) {
@@ -66,11 +79,11 @@ const RoomUpdate = () => {
       for (let item of error.details) {
         newErrors[item.path[0]] = item.message;
       }
-      console.log(newErrors);
+      // console.log(newErrors);
       setErrorsForm(newErrors);
     } else {
       setErrorsForm({});
-      dispatch(updateRoom(room))
+      dispatch(updateRoom(formData))
         .unwrap()
         .then(() => navigate("/rooms"))
         .catch((error) =>
@@ -85,7 +98,7 @@ const RoomUpdate = () => {
   return (
     <div className="bg-light p-5 rounded center-div">
       <StatusIndicator error={error} isLoading={isLoading}></StatusIndicator>
-      <h4 className=" text-center fs-3">Add Service</h4>
+      <h4 className=" text-center fs-3">Update Room</h4>
       <form onSubmit={handleFormSubmit}>
         <Input
           label="code"
@@ -111,6 +124,14 @@ const RoomUpdate = () => {
           value={room.type}
           onChange={handleInputChange}
           error={errorsForm.type}
+        />
+        <Input
+          label="imageform"
+          type="file"
+          name="imageform"
+          // value={service.imageform}
+          onChange={handleImageChange}
+          error={errorsForm.imageform}
         />
         <ButtonPrimary label="update room " type="submit" />
       </form>

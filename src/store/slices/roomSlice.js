@@ -63,7 +63,10 @@ export const updateRoom = createAsyncThunk(
   async (room, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.put(`${apiEndpoint}/${room.id}`, room);
+      const { data } = await axios.put(
+        `${apiEndpoint}/${room.get("id")}`,
+        room
+      );
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
