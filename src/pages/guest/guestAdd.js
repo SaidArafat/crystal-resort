@@ -62,7 +62,7 @@ const GuestAdd = () => {
 
   return (
     <div className="bg-light p-5 rounded center-div">
-      <h4 className=" text-center fs-3">Add Owner</h4>
+      <h4 className=" text-center fs-3">Add Guest</h4>
       <form onSubmit={handleFormSubmit}>
         <Input
           label="SSN"
