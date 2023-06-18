@@ -126,7 +126,7 @@ const serviceSlice = createSlice({
     });
     builder.addCase(fetchService.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.carDetails = action.payload;
+      state.serviceDetails = action.payload;
     });
     builder.addCase(fetchService.rejected, (state, action) => {
       state.isLoading = false;

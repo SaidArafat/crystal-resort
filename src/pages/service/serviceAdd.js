@@ -10,6 +10,7 @@ const ServiceAdd = () => {
   const [service, setService] = useState({
     name: "",
     price: "",
+    imageform: "",
   });
 
   const [errorsForm, setErrorsForm] = useState({});
@@ -23,12 +24,19 @@ const ServiceAdd = () => {
     setService(updatedItem);
   };
 
+  const handleImageChange = (event) => {
+    const newService = { ...service };
+    newService[event.target.name] = event.target.files[0];
+    setService(newService);
+  };
+
   const validateFormSubmit = () => {
     const options = { abortEarly: false };
 
     const schema = joi.object({
       name: joi.string().min(5).required().label("Name"),
       price: joi.number().min(2).required().label("Price"),
+      imageform: joi.any().required().label("Image"),
     });
 
     return schema.validate(service, options);
@@ -36,6 +44,11 @@ const ServiceAdd = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+
+    Object.keys(service).forEach((key) => {
+      formData.append(key, service[key]);
+    });
 
     const { error } = validateFormSubmit();
     if (error) {
@@ -43,11 +56,12 @@ const ServiceAdd = () => {
       for (let item of error.details) {
         newErrors[item.path[0]] = item.message;
       }
-      console.log(newErrors);
+      // console.log(newErrors);
       setErrorsForm(newErrors);
     } else {
       setErrorsForm({});
-      dispatch(addService(service))
+
+      dispatch(addService(formData))
         .unwrap()
         .then(() => navigate("/services"))
         .catch((error) =>
@@ -78,6 +92,14 @@ const ServiceAdd = () => {
           value={service.price}
           onChange={handleInputChange}
           error={errorsForm.price}
+        />
+        <Input
+          label="imageform"
+          type="file"
+          name="imageform"
+          // value={service.imageform}
+          onChange={handleImageChange}
+          error={errorsForm.imageform}
         />
         <ButtonPrimary label="add service " type="submit" />
       </form>
