@@ -10,7 +10,9 @@ import { register } from "../../store/slices/authSlice";
 const Register = () => {
   const { isLoading, error } = useSelector((state) => state.auth);
   const [account, setAccount] = useState({
+    id: "",
     name: "",
+    position: "",
     address: "",
     userName: "",
     password: "",
@@ -32,15 +34,24 @@ const Register = () => {
 
   const handleInputReset = () => {
     setAccount({
-      email: "",
+      id: "",
+      name: "",
+      position: "",
+      address: "",
+      userName: "",
       password: "",
+      email: "",
+      phoneNumber: "",
+      role: "",
     });
   };
 
   const validateFormSubmit = () => {
     const options = { abortEarly: false };
     const schema = joi.object({
+      id: joi.string().min(5).required().label("ID"),
       name: joi.string().min(5).required().label("Name"),
+      position: joi.string().min(5).required().label("Position"),
       address: joi.string().min(5).required().label("Address"),
       userName: joi.string().min(5).required().label("Username"),
       phoneNumber: joi.string().min(10).required().label("Phone"),
@@ -67,7 +78,7 @@ const Register = () => {
       for (let item of error.details) {
         newErrors[item.path[0]] = item.message;
       }
-      console.log(newErrors);
+      // console.log(newErrors);
       setErrorsForm(newErrors);
     } else {
       setErrorsForm({});
@@ -84,11 +95,22 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-light p-5 rounded center-div mt-3">
+    <div className="bg-light p-4 mt-4 px-5 rounded center-div">
       <StatusIndicator isLoading={isLoading} error={error}></StatusIndicator>
       <h4 className=" text-center fs-3">Register</h4>
       <form onSubmit={handleFormSubmit}>
         <div className="row">
+          <div className="col-6">
+            <Input
+              label="ID"
+              type="text"
+              name="id"
+              value={account.id}
+              onChange={handleInputChange}
+              error={errorsForm.id}
+              focus={true}
+            />
+          </div>
           <div className="col-6">
             <Input
               label="name"
@@ -97,9 +119,20 @@ const Register = () => {
               value={account.name}
               onChange={handleInputChange}
               error={errorsForm.name}
-              focus={true}
             />
           </div>
+
+          <div className="col-6">
+            <Input
+              label="position"
+              type="text"
+              name="position"
+              value={account.position}
+              onChange={handleInputChange}
+              error={errorsForm.position}
+            />
+          </div>
+
           <div className="col-6">
             <Input
               label="phone Number"
