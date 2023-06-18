@@ -20,8 +20,8 @@ const Table = ({ data, columns, onDelete, onViewDetails, onEdit }) => {
             <tr key={index}>
               <td>{index + 1}</td>
               {Object.keys(item).map((key) => {
-                if (key === "id") {
-                  return null; // Skip rendering the cell if the key is "id"
+                if (key === "id" || key === "imageUrl" || key === "imageform") {
+                  return null;
                 }
                 return <td key={key}>{item[key]}</td>;
               })}
